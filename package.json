@@ -4,6 +4,8 @@
   "description": "Node-js client implementation for docdata payments SOAP service 1.3",
   "main": "lib/docdata.js",
   "scripts": {
+    "compile": "babel --plugins transform-class-properties --presets es2015 -d lib/ src/",
+    "prepublish": "npm run compile",
     "lint": "node_modules/eslint/bin/eslint.js ./lib",
     "test": "node_modules/mocha/bin/_mocha -R spec --compilers js:babel-register tests/*.test.js"
   },
@@ -27,6 +29,7 @@
     "soap": "^0.12.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.5.1",
     "babel-eslint": "^4.1.8",
     "babel-plugin-transform-class-properties": "^6.5.2",
     "babel-preset-es2015": "^6.5.0",
