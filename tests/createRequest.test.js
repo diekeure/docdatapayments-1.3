@@ -10,7 +10,6 @@ var chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-
 describe('Docdata Payments CREATE', function() {
     let client;
 
@@ -21,7 +20,54 @@ describe('Docdata Payments CREATE', function() {
 
     it('should reject on empty data', function() {
         this.timeout(10000); //first time wsdl is read
-        return client.create({}).should.be.rejectedWith(Docdata.CreateErrors);
+        return client.create({}).then(
+            function () {
+                assert.fail("Expected to fail.");
+            },
+            function (e) {
+                e.should.be.an.instanceof(Docdata.CreateErrors);
+                e.should.have.property('error');
+                e.error.should.have.property('attributes');
+                e.error.attributes.should.have.property('code');
+                e.error.attributes.code.should.equal('REQUEST_DATA_INCORRECT');
+            }
+        );
+    });
+
+    it('should reject on incorrect data', function() {
+        let data = CreateStubs.getValidCreateRequest();
+        delete data.billTo;
+        this.timeout(10000); //first time wsdl is read
+        return client.create(data).then(
+            function () {
+                assert.fail("Expected to fail.");
+            },
+            function (e) {
+                e.should.be.an.instanceof(Docdata.CreateErrors);
+                e.should.have.property('error');
+                e.error.should.have.property('attributes');
+                e.error.attributes.should.have.property('code');
+                e.error.attributes.code.should.equal('REQUEST_DATA_INCORRECT');
+            }
+        );
+    });
+
+    it('should reject on incorrect merchant credentials', function() {
+        let data = CreateStubs.getValidCreateRequest();
+        data.merchant.password = 'test';
+        this.timeout(10000); //first time wsdl is read
+        return client.create(data).then(
+            function () {
+                assert.fail("Expected to fail.");
+            },
+            function (e) {
+                e.should.be.an.instanceof(Docdata.CreateErrors);
+                e.should.have.property('error');
+                e.error.should.have.property('attributes');
+                e.error.attributes.should.have.property('code');
+                e.error.attributes.code.should.equal('SECURITY_ERROR');
+            }
+        );
     });
 
     it('should work with correct data', function(){
@@ -29,9 +75,8 @@ describe('Docdata Payments CREATE', function() {
         return Promise.all([
             result.should.eventually.be.fulfilled,
             result.should.eventually.be.an('object'),
-            result.should.eventually.have.property('createSuccess'),
-            result.should.eventually.have.deep.property('createSuccess.key'),
-            result.should.eventually.have.deep.property('createSuccess.success')
+            result.should.eventually.have.property('key'),
+            result.should.eventually.have.property('success')
         ]);
     });
     

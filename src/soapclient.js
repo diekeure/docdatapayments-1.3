@@ -63,7 +63,6 @@ class SoapClient {
 
     create(request){
         removeNulls(request);
-        console.log(request);
         var self = this;
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
@@ -71,7 +70,7 @@ class SoapClient {
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(createResult.createSuccess && createResult.createSuccess.key){
-                        return resolve(createResult);
+                        return resolve(createResult.createSuccess);
                     } else if(createResult.createErrors) {
                         let err = new CreateErrors();
                         err.error = createResult.createErrors.error[0];

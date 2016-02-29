@@ -25,7 +25,7 @@ module.exports = {
 
         //amount
         let amount = new Amount(4000, 'EUR');
-        let address = new Address('Main St', '123', 'AnyTown', new Country('us'));
+        let address = new Address('Main St', '123', 'AnyTown', '45678', new Country('us'));
         let billTo = new Destination(name, address);
 
         //assemble request
