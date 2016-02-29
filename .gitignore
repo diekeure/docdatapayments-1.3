@@ -34,4 +34,3 @@ node_modules
 
 .idea
 tests/config.js
-lib
