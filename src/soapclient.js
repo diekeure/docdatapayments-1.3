@@ -1,6 +1,11 @@
 import Merchant from './merchant';
 import CreateRequest from './createrequest';
 import CreateErrors from './createerrors';
+import StatusRequest from './statusrequest';
+import StatusErrors from './statuserrors';
+import StartRequest from './startrequest';
+import StartErrors from './starterrors';
+
 
 var soap = require('soap');
 var debugSoap = require('debug')('docdata:soap');
@@ -17,11 +22,9 @@ class SoapClient {
 
     merchant;
 
-    constructor(wsdl, username, password){
+    constructor(wsdl){
         var self = this;
         this._wsdl = wsdl;
-        this._username = username;
-        this._password = password;
 
         if(!instance){
             instance = self;
@@ -67,6 +70,7 @@ class SoapClient {
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
                 c.create(request, function(err, createResult, raw){
+                    debugSoap(instance._client.lastRequest);
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(createResult.createSuccess && createResult.createSuccess.key){
@@ -74,6 +78,56 @@ class SoapClient {
                     } else if(createResult.createErrors) {
                         let err = new CreateErrors();
                         err.error = createResult.createErrors.error[0];
+                        return reject(err);
+                    } else {
+                        console.log(createResult);
+                    }
+                });
+            }, function(err){
+                reject(err);
+            });
+        })
+    }
+
+    start(request){
+        removeNulls(request);
+        var self = this;
+        return new Promise(function(resolve, reject){
+            self.getClient().then(function(c){
+                c.start(request, function(err, startResult, raw){
+                    debugSoap(instance._client.lastRequest);
+                    debugSoap(raw);
+                    if(err) return reject(err);
+                    if(startResult.startSuccess){
+                        return resolve(startResult.startSuccess);
+                    } else if(startResult.startErrors) {
+                        let err = new StartErrors();
+                        err.error = startResult.startErrors.error[0];
+                        return reject(err);
+                    } else {
+                        console.log(startResult);
+                    }
+                });
+            }, function(err){
+                reject(err);
+            });
+        })
+    }
+
+    status(request){
+        removeNulls(request);
+        let self = this;
+        return new Promise(function(resolve, reject){
+            self.getClient().then(function(c){
+                c.status(request, function(err, statusResult, raw){
+                    debugSoap(instance._client.lastRequest);
+                    debugSoap(raw);
+                    if(err) return reject(err);
+                    if(statusResult.statusSuccess){
+                        return resolve(statusResult.statusSuccess);
+                    } else if(statusResult.statusErrors) {
+                        let err = new StatusErrors();
+                        err.error = statusResult.statusErrors.error[0];
                         return reject(err);
                     } else {
                         console.log(createResult);

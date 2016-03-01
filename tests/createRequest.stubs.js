@@ -21,7 +21,7 @@ module.exports = {
         //merchant
         let merchant = new Merchant(Config.merchant.name, Config.merchant.password);
         let merchantOrderReference = uuid.v1();
-        let paymentPreferences = new PaymentPreferences('polpo', 14);
+        let paymentPreferences = new PaymentPreferences(Config.paymentPreferences, 14);
 
         //amount
         let amount = new Amount(4000, 'EUR');

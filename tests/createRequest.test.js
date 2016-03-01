@@ -6,6 +6,7 @@ var sinon = require('sinon');
 var soapStub = require('soap/soap-stub');
 var chai = require("chai");
 var should = chai.should();
+var assert = require('assert');
 var chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
