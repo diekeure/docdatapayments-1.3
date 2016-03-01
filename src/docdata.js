@@ -85,7 +85,7 @@ import PaymentResponsePaymentError from './paymentresponsepaymenterror';
 import ProceedErrors from './proceederrors';
 import RefundErrors from './refunderrors';
 import StartErrors from './starterrors';
-import statusErrors from './statuserrors';
+import StatusErrors from './statuserrors';
 import SoapClient from './soapclient';
 
 
@@ -177,8 +177,8 @@ DocdataPayments.PaymentResponsePaymentError = PaymentResponsePaymentError;
 DocdataPayments.ProceedErrors = ProceedErrors;
 DocdataPayments.RefundErrors = RefundErrors;
 DocdataPayments.StartErrors = StartErrors;
-DocdataPayments.statusErrors = statusErrors;
+DocdataPayments.StatusErrors = StatusErrors;
 DocdataPayments.SoapClient = SoapClient;
 DocdataPayments.SoapClient = SoapClient;
 
-export default DocdataPayments;
+module.exports = DocdataPayments;
