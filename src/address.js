@@ -2,17 +2,17 @@ import Country from './country';
 
 class Address{
 
-    company;
-    kvkNummer;
-    vatNumber;
-    careOf;
-    street;
-    houseNumber;
-    houseNumberAddition;
-    postalCode;
-    city;
-    state;
-    country;
+    company = null;
+    kvkNummer = null;
+    vatNumber = null;
+    careOf= null;
+    street = null;
+    houseNumber= null;
+    houseNumberAddition = null;
+    postalCode = null;
+    city = null;
+    state = null;
+    country = null;
 
     constructor(street, houseNumber, city, postalCode, country){
         if(street) this.street = street;
