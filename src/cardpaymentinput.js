@@ -1,7 +1,8 @@
-class CardPaymentInput{
-    items = null;
-    itemsElementName = null;
+class CardPaymentInput {
+    cardHolderName = null;
+    cardNumber = null;
+    expiryDate = null;
+    securityCode = null;
 }
 
-
- export default CardPaymentInput;
+export default CardPaymentInput;
