@@ -105,7 +105,7 @@ class SoapClient {
                         err.error = startResult.startErrors.error[0];
                         return reject(err);
                     } else {
-                        console.log(startResult);
+                        return reject(startResult);
                     }
                 });
             }, function(err){
