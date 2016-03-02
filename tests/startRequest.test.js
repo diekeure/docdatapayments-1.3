@@ -20,7 +20,7 @@ describe('Docdata Payments START', function() {
         done();
     });
 
-    it('should return redirect data', function(){
+    it('should returna payment response', function(){
         this.timeout(10000);
         let request = client.create(CreateStubs.getValidCreateRequest()).then(
             function (createResult) {

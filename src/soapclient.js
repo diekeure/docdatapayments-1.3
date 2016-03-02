@@ -139,6 +139,31 @@ class SoapClient {
         })
     }
 
+    cancel(request){
+        removeNulls(request);
+        var self = this;
+        return new Promise(function(resolve, reject){
+            self.getClient().then(function(c){
+                c.cancel(request, function(err, cancelResult, raw){
+                    debugSoap(instance._client.lastRequest);
+                    debugSoap(raw);
+                    if(err) return reject(err);
+                    if(cancelResult.cancelSuccess){
+                        return resolve(cancelResult.cancelSuccess);
+                    } else if(cancelResult.cancelErrors) {
+                        let err = new CancelErrors();
+                        err.error = cancelResult.cancelErrors.error[0];
+                        return reject(err);
+                    } else {
+                        return reject(cancelResult);
+                    }
+                });
+            }, function(err){
+                reject(err);
+            });
+        })
+    }
+
     get lastRequest(){
         if(instance._client){
             return instance._client.lastRequest;
