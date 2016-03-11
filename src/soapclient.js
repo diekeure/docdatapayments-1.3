@@ -130,7 +130,7 @@ class SoapClient {
                         err.error = statusResult.statusErrors.error[0];
                         return reject(err);
                     } else {
-                        console.log(createResult);
+                        console.log(statusResult);
                     }
                 });
             }, function(err){
