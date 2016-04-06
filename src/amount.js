@@ -6,7 +6,7 @@ class Amount{
     $value;
 
     constructor(value, currency){
-        if(value) this.value = value;
+        if(value) this.$value = value;
         if(currency) this.currency = currency;
     }
 
