@@ -70,7 +70,7 @@ class SoapClient {
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
                 c.create(request, function(err, createResult, raw){
-                    debugSoap(instance._client.lastRequest);
+                    if(instance._client) debugSoap(instance._client.lastRequest);
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(createResult.createSuccess && createResult.createSuccess.key){
@@ -95,7 +95,7 @@ class SoapClient {
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
                 c.start(request, function(err, startResult, raw){
-                    debugSoap(instance._client.lastRequest);
+                    if(instance._client) debugSoap(instance._client.lastRequest);
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(startResult.startSuccess){
@@ -120,7 +120,7 @@ class SoapClient {
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
                 c.status(request, function(err, statusResult, raw){
-                    debugSoap(instance._client.lastRequest);
+                    if(instance._client) debugSoap(instance._client.lastRequest);
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(statusResult.statusSuccess){
@@ -145,7 +145,7 @@ class SoapClient {
         return new Promise(function(resolve, reject){
             self.getClient().then(function(c){
                 c.cancel(request, function(err, cancelResult, raw){
-                    debugSoap(instance._client.lastRequest);
+                    if(instance._client) debugSoap(instance._client.lastRequest);
                     debugSoap(raw);
                     if(err) return reject(err);
                     if(cancelResult.cancelSuccess){
